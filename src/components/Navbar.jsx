@@ -1,17 +1,71 @@
-import { AppBar, Toolbar, Button, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { AppBar, Toolbar, Button, Typography, IconButton, Box } from "@mui/material";
+import { Link, useLocation } from "react-router-dom";
+import { Brightness4, Brightness7 } from "@mui/icons-material";
+import { useAppContext } from "../context/AppContext";
 
 export default function Navbar() {
-  return (
-    <AppBar position="static" sx={{ background: "#1565c0" }}>
+  const { theme, toggleTheme, cart, favorites } = useAppContext();
+  const location = useLocation();
 
+  const isActive = (path) => location.pathname === path;
+
+  return (
+    <AppBar position="static" sx={{ background: theme === 'dark' ? '#1a1a1a' : '#1565c0' }}>
       <Toolbar>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
           My Portfolio
         </Typography>
-        <Button color="inherit" component={Link} to="/">Home</Button>
-        <Button color="inherit" component={Link} to="/projects">Projects</Button>
-        <Button color="inherit" component={Link} to="/contact">Contact</Button>
+        
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Button 
+            color="inherit" 
+            component={Link} 
+            to="/"
+            sx={{ 
+              backgroundColor: isActive('/') ? 'rgba(255,255,255,0.1)' : 'transparent',
+              '&:hover': { backgroundColor: 'rgba(255,255,255,0.2)' }
+            }}
+          >
+            Home
+          </Button>
+          <Button 
+            color="inherit" 
+            component={Link} 
+            to="/projects"
+            sx={{ 
+              backgroundColor: isActive('/projects') ? 'rgba(255,255,255,0.1)' : 'transparent',
+              '&:hover': { backgroundColor: 'rgba(255,255,255,0.2)' }
+            }}
+          >
+            Projects
+          </Button>
+          <Button 
+            color="inherit" 
+            component={Link} 
+            to="/contact"
+            sx={{ 
+              backgroundColor: isActive('/contact') ? 'rgba(255,255,255,0.1)' : 'transparent',
+              '&:hover': { backgroundColor: 'rgba(255,255,255,0.2)' }
+            }}
+          >
+            Contact
+          </Button>
+          <Button 
+            color="inherit" 
+            component={Link} 
+            to="/analytics"
+            sx={{ 
+              backgroundColor: isActive('/analytics') ? 'rgba(255,255,255,0.1)' : 'transparent',
+              '&:hover': { backgroundColor: 'rgba(255,255,255,0.2)' }
+            }}
+          >
+            Analytics ({cart.length})
+          </Button>
+          
+          <IconButton color="inherit" onClick={toggleTheme}>
+            {theme === 'light' ? <Brightness4 /> : <Brightness7 />}
+          </IconButton>
+        </Box>
       </Toolbar>
     </AppBar>
   );
