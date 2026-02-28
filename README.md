@@ -101,11 +101,28 @@ src/
 
 ## 📸 Screenshots
 
-Visit the `/screenshots` folder to see:
-1. Home page with quick stats dashboard
-2. Projects gallery with search and favorites
-3. Analytics dashboard with cart and favorites management
-4. Theme toggle demonstration
+### 1. Home Page
+![Home Page](screenshots/home.png)
+*Home page featuring personalized greeting, quick stats dashboard (Favorites, Cart Items, Cart Value), and feature cards for navigation*
+
+### 2. Projects Gallery
+![Projects Gallery](screenshots/projects.png)
+*Projects gallery with search functionality, category filtering, favorite toggle, and technology stack display*
+
+### 3. Analytics Dashboard
+![Analytics Dashboard](screenshots/analytics.png)
+*Analytics dashboard showing cart analytics, favorites analytics, theme toggle, and sample products for testing*
+
+### 4. Reports Page (NEW - Experiment 5)
+![Reports Page](screenshots/reports.png)
+*Performance Reports dashboard with Redux-powered real-time metrics, cart management, favorites filtering, and performance overview*
+
+All screenshots demonstrate:
+- ✅ Redux Toolkit state management in action
+- ✅ useContext for theme and user profile
+- ✅ useMemo optimizations for derived data
+- ✅ Responsive Material-UI design
+- ✅ Interactive features (add to cart, favorites, search, filter)
 
 ## 🚀 Getting Started
 
