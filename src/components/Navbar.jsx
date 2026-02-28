@@ -1,10 +1,12 @@
 import { AppBar, Toolbar, Button, Typography, IconButton, Box } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
+import { useSelector } from "react-redux";
 import { useAppContext } from "../context/AppContext";
 
 export default function Navbar() {
-  const { theme, toggleTheme, cart, favorites } = useAppContext();
+  const { theme, toggleTheme } = useAppContext();
+  const cart = useSelector((state) => state.app.cart);
   const location = useLocation();
 
   const isActive = (path) => location.pathname === path;
@@ -60,6 +62,17 @@ export default function Navbar() {
             }}
           >
             Analytics ({cart.length})
+          </Button>
+          <Button 
+            color="inherit" 
+            component={Link} 
+            to="/reports"
+            sx={{ 
+              backgroundColor: isActive('/reports') ? 'rgba(255,255,255,0.1)' : 'transparent',
+              '&:hover': { backgroundColor: 'rgba(255,255,255,0.2)' }
+            }}
+          >
+            Reports
           </Button>
           
           <IconButton color="inherit" onClick={toggleTheme}>

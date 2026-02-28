@@ -1,10 +1,14 @@
 import React, { useMemo, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Grid, Box, TextField, Typography, Container } from "@mui/material";
 import ProjectCard from "../components/ProjectCard";
 import { useAppContext } from "../context/AppContext";
+import { addToFavorites, removeFromFavorites } from "../redux/slices/appSlice";
 
 export default function Projects() {
-  const { theme, addToFavorites, removeFromFavorites, favorites } = useAppContext();
+  const { theme } = useAppContext();
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.app.favorites);
   const [searchTerm, setSearchTerm] = useState("");
 
   const projects = useMemo(() => [
@@ -51,9 +55,9 @@ export default function Projects() {
 
   const handleFavoriteToggle = (project) => {
     if (isFavorite(project.id)) {
-      removeFromFavorites(project.id);
+      dispatch(removeFromFavorites(project.id));
     } else {
-      addToFavorites(project);
+      dispatch(addToFavorites(project));
     }
   };
 

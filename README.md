@@ -1,53 +1,59 @@
-# Modern Portfolio - Experiment 4
+# Modern Portfolio - Experiment 5
 
-A sophisticated React portfolio website enhanced with advanced React hooks and state management patterns.
+A sophisticated React portfolio website enhanced with Redux Toolkit, Context API, and advanced React hooks.
 
-## 🚀 Experiment 4 Enhancements
+## 🚀 Experiment 5 Updates
 
-### New Features Added:
-- **useContext**: Global state management for theme, favorites, cart, and user profile
-- **useReducer**: Structured state updates with 8+ actions for complex state management
+### ✅ New Features Implemented:
+- **Redux Toolkit**: Replaced useReducer with Redux Toolkit for scalable state management
+- **useContext**: Global state for theme and user profile (separate from Redux)
 - **useMemo**: Performance optimization for derived calculations and filtered data
-- **New Analytics Page**: Comprehensive dashboard demonstrating all new features
+- **New Reports Page**: Comprehensive performance dashboard with real-time metrics
 
 ### 📁 Project Structure
 ```
 src/
 ├── components/
-│   ├── Navbar.jsx          # Enhanced with context integration
+│   ├── Navbar.jsx          # Uses Redux (useSelector) + Context (theme)
 │   ├── Footer.jsx
 │   ├── ProjectCard.jsx     # Enhanced with favorites and theme support
 │   └── Skills.jsx
 ├── context/
-│   └── AppContext.jsx      # Global context provider
-├── reducer/
-│   └── appReducer.js       # State management reducer
+│   └── AppContext.jsx      # Context for theme & user (simplified)
+├── redux/
+│   ├── store.js            # Redux store configuration
+│   └── slices/
+│       └── appSlice.js     # Redux slice with 7 actions
 ├── pages/
-│   ├── Home.jsx            # Enhanced with context and useMemo
-│   ├── Projects.jsx        # Enhanced with search, favorites, and useMemo
+│   ├── Home.jsx            # Uses Redux + Context + useMemo
+│   ├── Projects.jsx        # Uses Redux + Context + useMemo
 │   ├── Contact.jsx
-│   └── Analytics.jsx       # New page demonstrating all features
-├── App.jsx                 # Wrapped with AppProvider
+│   ├── Analytics.jsx       # Updated to use Redux
+│   └── Reports.jsx         # ✅ NEW - Experiment 5 page
+├── App.jsx                 # Wrapped with Redux Provider + AppProvider
 └── main.jsx
 ```
 
 ## 🎯 Key Features
 
+### Redux Toolkit State Management
+- **Store Configuration**: Using `configureStore` from Redux Toolkit
+- **App Slice**: Created with `createSlice` containing 7 reducers
+- **Actions**: addToCart, removeFromCart, updateCartQuantity, clearCart, addToFavorites, removeFromFavorites, clearFavorites
+- **Used in Components**: Navbar, Home, Projects, Analytics, Reports (5+ components)
+- **Hooks**: `useSelector` for reading state, `useDispatch` for dispatching actions
+
 ### Global State Management (useContext)
 - **Theme System**: Light/dark mode toggle across all components
 - **User Profile**: Mock user data accessible globally
-- **Favorites System**: Add/remove favorite projects
-- **Shopping Cart**: Full cart functionality with quantity management
-
-### Structured State Updates (useReducer)
-- **8+ Actions**: TOGGLE_THEME, ADD_TO_FAVORITES, REMOVE_FROM_FAVORITES, ADD_TO_CART, REMOVE_FROM_CART, UPDATE_CART_QUANTITY, CLEAR_CART, UPDATE_USER
-- **Centralized Logic**: All state mutations handled in one reducer
-- **Type Safety**: Consistent action patterns and state structure
+- **Separation of Concerns**: Context for UI state, Redux for data state
 
 ### Performance Optimization (useMemo)
-- **Filtered Search**: Real-time project filtering without re-computation
-- **Statistics Calculation**: Cart totals, favorite counts, category analytics
-- **Derived Data**: Complex calculations cached until dependencies change
+- **Cart Metrics**: Total items, total value, average price calculations
+- **Favorite Analytics**: Category breakdown, filtered favorites
+- **Project Filtering**: Real-time search with memoized results
+- **Performance Score**: Derived calculation based on cart and favorites activity
+- **Prevents Re-renders**: All expensive calculations cached until dependencies change
 
 ### Analytics Dashboard
 - **Real-time Statistics**: Cart value, item counts, favorite analytics
@@ -118,40 +124,59 @@ Visit the `/screenshots` folder to see:
    npm run build
    ```
 
-## 📊 Experiment 4 Implementation
+## 📊 Experiment 5 Implementation Details
+
+### Redux Toolkit Implementation
+- **Store**: `store.js` configured using `configureStore`
+- **Slice**: `appSlice.js` created with `createSlice`
+- **7 Reducers**: addToCart, removeFromCart, updateCartQuantity, clearCart, addToFavorites, removeFromFavorites, clearFavorites
+- **State Shape**: `{ favorites: [], cart: [] }`
+- **Used in 5+ Components**: Navbar, Home, Projects, Analytics, Reports
 
 ### useContext Usage
-- `AppContext.jsx` provides global state
-- Used in `Navbar.jsx`, `Home.jsx`, `Projects.jsx`, `Analytics.jsx`
-- Manages theme, user, favorites, and cart state
-
-### useReducer Implementation
-- `appReducer.js` handles 8 different action types
-- Centralized state logic for predictable updates
-- Supports complex operations like quantity updates and batch operations
+- `AppContext.jsx` provides theme and user profile
+- Simplified to focus on UI-related state only
+- Used in all pages for theme toggling
+- Separation of concerns: Context for UI, Redux for data
 
 ### useMemo Optimization
-- Project filtering and search results
-- Statistics calculations (cart totals, favorite counts)
-- Category breakdowns and analytics data
+- **Reports Page**: Cart metrics, favorite metrics, performance score, filtered favorites
+- **Home Page**: Quick stats calculations (favorites count, cart items, total value)
+- **Projects Page**: Filtered projects, project statistics, category breakdown
+- **Analytics Page**: Cart stats, favorite stats, filtered cart items
 - Prevents unnecessary re-renders on every state change
 
-### New Analytics Page
-- Comprehensive demonstration of all React hooks
-- Interactive cart and favorites management
-- Real-time statistics and insights
-- Sample products for testing functionality
+### New Reports Page (Experiment 5)
+- **Redux Integration**: Uses useSelector and useDispatch throughout
+- **Real-time Metrics**: Performance score, cart analytics, favorite analytics
+- **Interactive Features**: Add/remove cart items, manage favorites, search/filter
+- **useMemo Optimizations**: All derived calculations are memoized
+- **Context Integration**: Theme-aware styling and user profile display
 
 ## 🔧 Development Notes
 
-- **Performance**: All expensive calculations are memoized
-- **State Architecture**: Separated concerns between context and reducer
+- **Performance**: All expensive calculations are memoized with useMemo
+- **State Architecture**: Redux Toolkit for data state, Context for UI state
 - **Component Design**: Reusable components with prop interfaces
-- **Error Handling**: Context usage with proper error boundaries
+- **Redux Best Practices**: Using Redux Toolkit's createSlice and configureStore
 - **Code Organization**: Following the recommended folder structure
+
+## 📦 Experiment 5 Summary
+
+### What Changed from Experiment 4:
+1. **Replaced useReducer with Redux Toolkit** - More scalable and industry-standard
+2. **Simplified Context** - Now only handles theme and user (UI concerns)
+3. **Added Reports Page** - New comprehensive dashboard with performance metrics
+4. **Enhanced useMemo Usage** - More optimizations across all pages
+5. **Better Separation of Concerns** - Redux for data, Context for UI
+
+### Screenshots Added:
+- `/screenshots/home.png` - Home page with quick stats
+- `/screenshots/reports.png` - New Reports dashboard
+- `/screenshots/redux-feature.png` - Redux DevTools showing state
 
 ---
 
 **UID**: 23BAI70126  
-**Experiment**: 4 - Advanced React Hooks  
-**Deployment**: {uid}-4-navkaran-singh.vercel.app
+**Experiment**: 5 - Redux Toolkit + Advanced State Management  
+**Deployment**: 23bai70126-5-arushi.vercel.app

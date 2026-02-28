@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { useSelector } from "react-redux";
 import { Container, Typography, Button, Box, Card, CardContent, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Skills from "../components/Skills";
@@ -6,7 +7,9 @@ import { useAppContext } from "../context/AppContext";
 
 export default function Home() {
   const navigate = useNavigate();
-  const { theme, user, favorites, cart } = useAppContext();
+  const { theme, user } = useAppContext();
+  const favorites = useSelector((state) => state.app.favorites);
+  const cart = useSelector((state) => state.app.cart);
 
   const quickStats = useMemo(() => ({
     favoriteProjects: favorites.length,

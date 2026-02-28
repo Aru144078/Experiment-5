@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Container,
   Grid,
@@ -26,21 +27,20 @@ import {
   TrendingUp as TrendingUpIcon
 } from '@mui/icons-material';
 import { useAppContext } from '../context/AppContext';
+import {
+  addToCart,
+  removeFromCart,
+  updateCartQuantity,
+  clearCart,
+  addToFavorites,
+  removeFromFavorites
+} from '../redux/slices/appSlice';
 
 const Analytics = () => {
-  const { 
-    theme, 
-    favorites, 
-    cart, 
-    user,
-    addToFavorites, 
-    removeFromFavorites,
-    addToCart,
-    removeFromCart,
-    updateCartItemQuantity,
-    clearCart,
-    toggleTheme
-  } = useAppContext();
+  const { theme, user, toggleTheme } = useAppContext();
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.app.favorites);
+  const cart = useSelector((state) => state.app.cart);
 
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -107,7 +107,7 @@ const Analytics = () => {
         </Button>
         <Button 
           variant="outlined" 
-          onClick={clearCart}
+          onClick={() => dispatch(clearCart())}
           disabled={cart.length === 0}
           startIcon={<DeleteIcon />}
         >
@@ -179,7 +179,7 @@ const Analytics = () => {
                       <Box display="flex" alignItems="center" gap={1}>
                         <IconButton 
                           size="small" 
-                          onClick={() => updateCartItemQuantity(item.id, item.quantity - 1)}
+                          onClick={() => dispatch(updateCartQuantity({ itemId: item.id, quantity: item.quantity - 1 }))}
                         >
                           <RemoveIcon />
                         </IconButton>
@@ -188,14 +188,14 @@ const Analytics = () => {
                         </Typography>
                         <IconButton 
                           size="small" 
-                          onClick={() => updateCartItemQuantity(item.id, item.quantity + 1)}
+                          onClick={() => dispatch(updateCartQuantity({ itemId: item.id, quantity: item.quantity + 1 }))}
                         >
                           <AddIcon />
                         </IconButton>
                         <IconButton 
                           size="small" 
                           color="error"
-                          onClick={() => removeFromCart(item.id)}
+                          onClick={() => dispatch(removeFromCart(item.id))}
                         >
                           <DeleteIcon />
                         </IconButton>
@@ -271,7 +271,7 @@ const Analytics = () => {
                           <IconButton 
                             size="small" 
                             color="error"
-                            onClick={() => removeFromFavorites(item.id)}
+                            onClick={() => dispatch(removeFromFavorites(item.id))}
                           >
                             <FavoriteIcon />
                           </IconButton>
@@ -326,7 +326,7 @@ const Analytics = () => {
                           <Button 
                             size="small" 
                             variant="contained"
-                            onClick={() => addToCart(product)}
+                            onClick={() => dispatch(addToCart(product))}
                           >
                             Add to Cart
                           </Button>
@@ -335,9 +335,9 @@ const Analytics = () => {
                             color={isFavorite(product.id) ? 'error' : 'default'}
                             onClick={() => {
                               if (isFavorite(product.id)) {
-                                removeFromFavorites(product.id);
+                                dispatch(removeFromFavorites(product.id));
                               } else {
-                                addToFavorites(product);
+                                dispatch(addToFavorites(product));
                               }
                             }}
                           >
